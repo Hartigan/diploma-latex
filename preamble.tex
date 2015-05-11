@@ -3,6 +3,20 @@
 % Примечание: параметр draft помечает строки, вышедшие за границы страницы, прямоугольником, в фильной версии его нужно удалить.
 \documentclass[a4paper,14pt,russian,oneside,final]{extreport}
 
+% Зачем: Предоставляет проприетарный Times New Roman.
+% ОБНОВЛЕНИЕ: лучше использовать scalable-cyrfonts-tex: меньше проблем с установкой
+% Из руководства к PSCyr: "Во избежание проблем пакет PSCyr должен загружаться перед пакета-ми inputenc и babel".
+% Примечание: Требует шаманства при установке, инструкция http://plumbum-blog.blogspot.com/2010/06/miktex-28-pscyr-04d.html
+% http://blog.harrix.org/?p=444
+% надо закомментировать это, чтобы использовать scalable-cyrfonts-tex:
+\usepackage{pscyr}
+
+% Зачем: Предоставляет свободный Times New Roman.
+% Шрифт идёт вместе с пакетом scalable-cyrfonts-tex в Ubuntu/Debian
+% раскомментировать, чтобы использовать scalable-cyrfonts-tex:
+%\usefont{T2A}{ftm}{m}{sl}
+
+
 % Зачем: Установка кодировки исходных файлов.
 \usepackage[utf8]{inputenc}
 
@@ -18,13 +32,10 @@
 % Зачем: Учет особенностей различных языков.
 \usepackage[russian]{babel}
 
-% Зачем: Улучшает отображение русских шрифтов.
-% Примечание: Требует шаманства при установке, инструкция http://plumbum-blog.blogspot.com/2010/06/miktex-28-pscyr-04d.html
-%\usepackage{pscyr}
-
 % Зачем: Добавляет поддержу дополнительных размеров текста 8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, and 20pt.
 % Почему: Пункт 2.1.1 Требований по оформлению пояснительной записки.
 \usepackage{extsizes}
+
 
 % Зачем: Длинна, пимерно соответвующая 5 символам
 % Почему: Требования содержат странное требование про отсупы в 5 символов (для немоноширинного шрифта :| )
@@ -53,11 +64,6 @@
 % Почему: Пункт 2.1.1 Требований по оформлению пояснительной записки.
 % Примечание: В требованиях не указан, какой именно шрифт использовать. По традиции используем TNR.
 \renewcommand{\rmdefault}{ftm} % Times New Roman
-%\renewcommand{\rmdefault}{ptm}
-%\usepackage{newtxtext}
-%\usepackage{mathptmx}
-%\usepackage{paratype}
-%\usepackage{newtxtext}
 
 
 % Зачем: Отключает использование изменяемых межсловных пробелов.
@@ -156,8 +162,7 @@
   \@startsection{subsubsection}{3}%
     {\fivecharsapprox}%
     {-1em \@plus -1ex \@minus -.2ex}%
-    %{\z@}%
-    {1em \@plus .2ex}%
+    {\z@}%
     {\raggedright\hyphenpenalty=10000\normalfont\normalsize\bfseries}}
 \makeatother
 
@@ -196,8 +201,8 @@
 
 % Зачем: Задание подписей, разделителя и нумерации частей рисунков
 % Почему: Пункт 2.5.5 Требований по оформлению пояснительной записки.
-\DeclareCaptionLabelFormat{stbfigure}{Рисунок #2}
-\DeclareCaptionLabelFormat{stbtable}{Таблица #2}
+\DeclareCaptionLabelFormat{stbfigure}{Рисунок \emph{#2}}
+\DeclareCaptionLabelFormat{stbtable}{Таблица \emph{#2}}
 \DeclareCaptionLabelSeparator{stb}{~---~}
 \captionsetup{labelsep=stb}
 \captionsetup[figure]{labelformat=stbfigure,justification=centering,aboveskip={26pt plus 3pt minus 2pt}}
@@ -326,7 +331,7 @@
 \renewcommand{\lstlistingname}{Листинг}
 
 \lstdefinelanguage{FSharp}
-    {morekeywords={abstract,and,as,assert,base,begin,class,default,delegate,do,done,downcast,downto,elif,else,end,exception,extern,false,finally,for,fun,function,global,if,in,inherit,inline,interface,internal,lazy,let,let!,match,member,module,mutable,namespace,new,not,null,of,open,or,override,private,public,rec,return,return!,select,static,struct,then,to,true,try,type,upcast,use,use!,val,void,when,while,with,yield,yield!,asr,land,lor,lsl,lsr,lxor,mod,sig,atomic,break,checked,component,const,constraint,constructor,continue,eager,event,external,fixed,functor,include,method,mixin,object,parallel,process,protected,pure,sealed,tailcall,trait,var,virtual,volatile},
+    {morekeywords={abstract,and,as,assert,base,begin,class,default,delegate,do,done,downcast,downto,elif,else,end,exception,extern,false,finally,for,fun,function,global,if,in,inherit,inline,interface,internal,lazy,let,let!,match,member,module,mutable,namespace,new,not,null,of,open,or,override,private,public,rec,return,return!,select,static,struct,then,to,true,try,type,upcast,use,use!,val,void,when,while,with,yield,yield!,asr,land,lor,lsl,lsr,lxor,mod,sig,atomic,break,checked,component,const,constraint,constructor,continue,eager,event,external,fixed,functor,include,method,mixin,object,parallel,process,protected,pure,sealed,tailcall,trait,virtual,volatile},
     keywordstyle=\bfseries\color{bluekeywords},
     sensitive=false,
     morecomment=[l][\color{greencomments}]{///},
@@ -433,3 +438,38 @@
 % Для включения pdf документов в результирующий файл
 \usepackage{pdfpages}
 
+% Для использования знака градуса и других знаков
+% http://ctan.org/pkg/gensymb
+\usepackage{gensymb}
+
+% Зачем: преобразовывать текст в верхний регистр командой MakeTextUppercase
+\usepackage{textcase}
+
+% Зачем: Переносы в словах с тире.
+% Тире в словае заменяем на \hyph: аппаратно\hyphпрограммный.
+% https://stackoverflow.com/questions/2193307/how-to-get-latex-to-hyphenate-a-word-that-contains-a-dash#
+\def\hyph{-\penalty0\hskip0pt\relax}
+
+% Добавляем левый отступ для библиографии
+% https://tex.stackexchange.com/questions/133253/leftmargin-problem-at-the-bibliography
+\makeatletter
+\renewenvironment{thebibliography}[1]
+     {\sectioncentered*{Cписок использованных источников}
+      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \setlength{\itemindent}{\dimexpr\labelwidth+\labelsep+1em}
+            \leftmargin\z@
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
