@@ -52,8 +52,8 @@
   \item IImageComparer --- интекфейс для алгоритмов оценки качества полученных изображений.
 \end{itemize}
 
-\subsubsection{Интерфейс IPixelConverter}
-\label{subsub:development:types:ipixelconverter}
+\subsection{Интерфейс IPixelConverter}
+\label{subsub:development:ipixelconverter}
 
 \begin{figure}[ht]
 \centering
@@ -76,8 +76,8 @@ IPixelConverter --- представляет интерфейс для конв�
   \item PixelConverterHigh --- преобразует 256-цветовой пиксель с глубиной дискретизации 256.
 \end{itemize}
 
-\subsubsection{Интерфейс IImageConverter}
-\label{subsub:development:types:iimageconverter}
+\subsection{Интерфейс IImageConverter}
+\label{subsub:development:iimageconverter}
 
 \begin{figure}[ht]
 \centering
@@ -103,8 +103,8 @@ IImageConverter --- представляет интерфейс для прео�
   количество блоков для использования в алгоритме обучения нейронной сети.
 \end{itemize}
 
-\subsubsection{Интерфейс IEncoder}
-\label{subsub:development:types:iencoder}
+\subsection{Интерфейс IEncoder}
+\label{subsub:development:iencoder}
 
 \begin{figure}[ht]
 \centering
@@ -121,8 +121,8 @@ IEncoder --- представляет интерфейс для преобраз
 
 В прототипе представлена одна реализация Encoder, которая создается на основе полученной нейронной сети.
 
-\subsubsection{Интерфейс IDecoder}
-\label{subsub:development:types:idecoder}
+\subsection{Интерфейс IDecoder}
+\label{subsub:development:idecoder}
 
 \begin{figure}[ht]
 \centering
@@ -140,8 +140,8 @@ IDecoder --- представляет интерфейс для преобраз
 
 В прототипе представлена одна реализация Decoder, которая создается на основе полученной нейронной сети или загружается из Stream.
 
-\subsubsection{Интерфейс IConverterFactory}
-\label{subsub:development:types:iconverterfactory}
+\subsection{Интерфейс IConverterFactory}
+\label{subsub:development:iconverterfactory}
 
 \begin{figure}[ht]
 \centering
@@ -161,8 +161,8 @@ IConverterFactory --- представляет интерфейс, с испол
 
 В прототипе представлена одна реализация ConverterFactory, которая создается объектом строителя ConverterBuilder.
 
-\subsubsection{Интерфейс IConverterBuilder}
-\label{subsub:development:types:iconverterbuilder}
+\subsection{Интерфейс IConverterBuilder}
+\label{subsub:development:iconverterbuilder}
 
 \begin{figure}[ht]
 \centering
@@ -182,8 +182,8 @@ IConverterBuilder --- представляет интерфейс, c помощ�
 
 В прототипе представлена одна реализация ConverterBuilder, которая создает фабрику кодеров/декодеров для проведения исследования.
 
-\subsubsection{Интерфейс IFileManager}
-\label{subsub:development:types:ifilemanager}
+\subsection{Интерфейс IFileManager}
+\label{sub:development:ifilemanager}
 
 \begin{figure}[ht]
 \centering
@@ -206,8 +206,8 @@ IFileManager --- представляет интерфейс, который и�
 В прототипе представлена одна реализация FileManager, которая читает матрицы пикселей из файлов.
 Также класс может FileManager сохранять и читать файлы с сжатыми изображниями.
 
-\subsubsection{Интерфейс IImageComparer}
-\label{subsub:development:types:iimagecomparer}
+\subsection{Интерфейс IImageComparer}
+\label{subsub:development:iimagecomparer}
 
 \begin{figure}[ht]
 \centering
