@@ -10,12 +10,14 @@
 Необходимость использования низкоуровневых возможностей \cppcli{} в разрабатываемом ПО отсутствует, следовательно данный язык можно исключить из списка кандидатов.
 \vbnet{} уступает по удобству использования двум другим кандидатам из нашего списка.
 Оставшиеся два языка программирования \csharp{} и \fsharp{} являются первостепенным, элегантными, мультипарадигменными языками программирования для платформы \dotnet.
-Так как на данном этапе нет необходимости выполнять много операций по обработке данных, \fsharp тоже не подходит.
+Для платформы \dotnet{} существуют библиотеки, которые позволяют упростить работу с системами построенными на событийной модели.
+В данном случая я буду использовать инструменты разработанные в Microsoft Research --- \rx{}. В отдельной главе будут описаны основные функции, которые берет на себя данная библиотека.
 Таким образом, с учетом вышеперечисленных факторов, целесообразно остановить выбор на следующих технологиях:
 \begin{itemize}
-  \item операционная система Windows~7;
+  \item операционная система Windows~10;
   \item платформа разработки \dotnet{};
-  \item язык программирования \csharp{}.
+  \item язык программирования \csharp{};
+  \item библиотека для работы с событиями --- \rx{}.
 \end{itemize}
 Поддержка платформой \dotnet{} различных языков программирования позволяет использовать язык, который наиболее просто и <<красиво>> позволяет решить возникающую задачу.
 Разрабатываемое программное обеспечение в некоторой степени использует данное преимущество платформы.
@@ -238,7 +240,7 @@ public string Name { get; private set; }
 В новой версии появилась упрощенная поддержка выполнения асинхронных функций с помощью двух новых слов "---  \lstinline[style=csharpinlinestyle]!async! и \lstinline[style=csharpinlinestyle]!await!.
 Ключевым словом \lstinline[style=csharpinlinestyle]!async! помечаются методы и лямбда"=выражения, которые внутри содержат ожидание выполнения асинхронных операций с помощью оператора \lstinline[style=csharpinlinestyle]!await!, который отвечает за преобразования кода метода во время компиляции.
 
-На данный момент разрабатывается версия \csharp{} 6.0.
+На данный момент актуальная версия \csharp{} 6.0.
 Новые возможности в версии 6.0~\cite{improves_csharp6}:
 \begin{itemize}
   \item инициализация свойств со значениями:
@@ -320,5 +322,216 @@ public string Name { get; private set; }
     \end{lstlisting}
 \end{itemize}
 
-Новая версия языка будет доступна в Visual Studio 2015. Microsoft выпустила предварительную версию Visual studio 2015 и .Net 4.6 для разработчиков,
-в которой можно изучить нововведения.
+Последняя версия языка доступна в Visual Studio 2015. Microsoft выпустила предварительную версию Visual studio 2015 и .Net 4.6 для разработчиков,
+в которой можно изучить нововведения. Существует специальная редакция --- Сommunity Edition. Её можно использовать для обучения бесплатно, сущетвуют только ограничения для коммерческих проектов.
+
+\subsection{Reactive Extensions}
+\label{sub:practice:reactive_extensions}
+
+Реактивные расширения — звучит настолько круто, что напрашивается связь с реактивными самолетами, но как мы уже знаем, речь идет о реактивном программировании.
+Reactive происходит от слова react (реагировать), подразумевается, что система реагирует на изменения состояния.
+
+Как правило, мы пишем код, в котором есть методы и функции, которые мы вызываем, получаем результат и его обрабатываем. \rx{} в свою очередь позволяет создавать события и обработчики,
+которые будут реагировать на них. Таким образом, система будет состоять из последовательности событий, которые будут сообщать об изменении состояния и должным образом реагировать на них.
+
+Rx состоит из двух базовых абстракций в пространстве имен System начиная с .NET 4.0, а именно \lstinline[style=csharpinlinestyle]!System.IObserver! и \lstinline[style=csharpinlinestyle]!System.IObservable!.
+Как видно из названия, это реализация паттерна «наблюдатель» (Observer). В данной реализации \lstinline[style=csharpinlinestyle]!IObservable! выступает как субъект,
+и очевидно, что \lstinline[style=csharpinlinestyle]!IObserver! это наблюдатель, который может подписываться на изменения.
+В \dotnet{} уже есть реализация наблюдателя в виде событий (Events). Как уже упоминалось, Rx позволяет создавать последовательность событий, и само собой разумеется,
+что это можно сделать с помощью ивентов. Способы работы с \rx{} и Events отличаются, но об этом немного позже.
+
+IObserver --- предоставляет механизм получения уведомлений. Интерфейс объявляет три метода:
+
+\begin{itemize}
+  \item \lstinline[style=csharpinlinestyle]!void OnNext(T value)! --- предоставляет следующий элемент в последовательности.
+  \item \lstinline[style=csharpinlinestyle]!void OnError(Exception ex)! --- позволяет передать \lstinline[style=csharpinlinestyle]!Exception! и адекватно его обработать. Подразумевается, что после этого сообщения последовательность заканчивается и наблюдателям больше не нужно следить за изменениями.
+  \item \lstinline[style=csharpinlinestyle]!void OnCompleated()! --- сообщается, что последовательность закончилась и больше не будет новых сообщений, не нужно их ожидать.
+\end{itemize}
+
+IObservable --- производит уведомления и позволяет подписываться наблюдателям. Объявляет один метод:
+
+\lstinline[style=csharpinlinestyle]!IDisposable Subscribe(IObserver observer)! --- принимает наблюдателя (\lstinline[style=csharpinlinestyle]!IObserver!) параметром и подписывает его на сообщения.
+Обратите внимание, что метод возвращает \lstinline[style=csharpinlinestyle]!IDisposable!, с помощью чего можно потом вызывать метод \lstinline[style=csharpinlinestyle]!Dispose!, тем самым отписав и уничтожив наблюдателя.
+
+Если мы захотим реализовать \lstinline[style=csharpinlinestyle]!IObservable!, то нужно будет помимо метода \lstinline[style=csharpinlinestyle]!Subscribe! также реализовать логику,
+которая может отправлять новые сообщения, ошибки или сообщать об окончании последовательности. Получается, что также нужно будет реализовать интерфейс \lstinline[style=csharpinlinestyle]!IObservable!,
+для таких целей можно использовать тип \lstinline[style=csharpinlinestyle]!Subject!. Но чтобы его использовать, нужно будет с Nuget установить дополнительную библиотеку (Install-Package Rx-Mail),
+которая также предоставляет дополнительные расширения и возможность использовать LINQ.
+
+\begin{lstlisting}[style=csharpinlinestyle, caption={Пример использования Subject}, label=lst:practice:reactive_extensions:subject_example]
+  using System;
+  using System.Reactive.Subjects;
+
+  namespace Demo
+  {
+    class Program
+    {
+      static Subject<int> sub = new Subject<int>();//Declare
+      static void Main()
+      {
+        sub.Subscribe(Console.WriteLine); //Subscribe
+
+        sub.OnNext(234); //Publish
+      }
+    }
+  }
+\end{lstlisting}
+
+В этом листинге~\ref{lst:practice:reactive_extensions:subject_example} создается новая последовательность, то есть \lstinline[style=csharpinlinestyle]!Subject!
+(также можно назвать последовательность объектов типа \lstinline[style=csharpinlinestyle]!int!),
+затем на нее подписывается наблюдатель (в данном случае просто выводится в консоль каждое значение последовательности),
+и передается значение, которое выводится в консоль с помощью наблюдателя. Каждый раз, когда подписывается новый наблюдатель,
+ему начинают поставляться элементы последовательности. Но есть еще несколько реализаций с другим поведением:
+
+\begin{itemize}
+  \item ReplaySubject;
+  \item BehaviourSubject;
+  \item AsyncSubject;
+\end{itemize}
+
+Рассмотрим эти типы подробнее.
+
+\subsubsection{ReplaySubject}
+\label{subsub:practice:reactive_extensions:replay_subject}
+
+ReplaySubject --- поставляет все элементы последовательности независимо от того, когда был подписан наблюдатель.
+
+\begin{lstlisting}[style=csharpinlinestyle, caption={Пример использования ReplaySubject}, label=lst:practice:reactive_extensions:replay_subject_example]
+using System;
+using System.Reactive.Subjects;
+
+namespace Demo
+{
+  class Program
+  {
+    static ReplaySubject<int> sub = new ReplaySubject<int>();
+
+    static void Main()
+    {
+      sub.OnNext(222);
+
+      sub.Subscribe(Console.WriteLine);
+
+      sub.OnNext(354);
+    }
+  }
+}
+\end{lstlisting}
+
+\subsubsection{BehaviorSubject}
+\label{subsub:practice:reactive_extensions:behavior_subject}
+
+BehaviorSubject --- не может быть пустым, всегда содержит в себе элемент, но только последний.
+
+\begin{lstlisting}[style=csharpinlinestyle, caption={Пример использования BehaviorSubject}, label=lst:practice:reactive_extensions:behavior_subject_example]
+using System;
+using System.Reactive.Subjects;
+
+namespace DemoData
+{
+  class Program
+  {
+    static BehaviorSubject<int> sub = new BehaviorSubject<int>(666);
+
+    static void Main()
+    {
+      sub.OnNext(222);
+
+      sub.Subscribe(Console.WriteLine); // 222
+    }
+  }
+}
+\end{lstlisting}
+
+\subsubsection{AsyncSubject}
+\label{subsub:practice:reactive_extensions:async_subject}
+
+AsyncSubject --- также возвращает только последнее значение, но, в отличие от остальных реализаций, данные будут публиковаться при вызове \lstinline[style=csharpinlinestyle]!OnCompleated!.
+
+\begin{lstlisting}[style=csharpinlinestyle, caption={Пример использования AsyncSubject}, label=lst:practice:reactive_extensions:async_subject_example]
+using System;
+using System.Reactive.Subjects;
+
+namespace DemoData
+{
+  class Program
+  {
+    static AsyncSubject<int> sub = new AsyncSubject<int>();
+
+    static void Main(string[] args)
+    {
+      sub.OnNext(222);
+
+      sub.Subscribe(Console.WriteLine);
+
+      sub.OnCompleted(); // Publish 222
+    }
+  }
+}
+\end{lstlisting}
+
+Теперь сравним с стандартными Event’ами, вот как выглядел бы код:
+
+\begin{lstlisting}[style=csharpinlinestyle, caption={Стандартная модель Event}, label=lst:practice:reactive_extensions:event_example]
+using System;
+namespace Demo
+{
+  class Program
+  {
+    static event Action<int> Ev; //Declare
+
+    static void Main(string[] args)
+    {
+      Ev += Console.WriteLine; //Subscribe
+
+      Ev(234); //Publish
+    }
+  }
+}
+\end{lstlisting}
+
+Все предельно просто, выполнение будет проходить так же, но в \rx{} есть ряд преимуществ перед ивентами:
+
+Реализация \lstinline[style=csharpinlinestyle]!IObservable! --- это классы, в которых можно делать все, что хочешь. Методы, которые объявляет \lstinline[style=csharpinlinestyle]!IObserver!,
+позволяют более корректно управлять последовательностью. Можно сообщить, что последовательность закончилась и тем самым сделать последние нужные действия и отписаться.
+Есть возможность управлять ошибками. В ивентах чтобы отписаться, нужно сохранить наблюдателя в какой-то переменной и как-то ими управлять.
+В \rx{} метод \lstinline[style=csharpinlinestyle]!Subscribe! возвращает \lstinline[style=csharpinlinestyle]!IDisposable! и ему можно просто вызвать \lstinline[style=csharpinlinestyle]!Dispose()!, чтобы отписаться.
+
+\begin{lstlisting}[style=csharpinlinestyle, caption={Отписка от события}, label=lst:practice:reactive_extensions:dispose_example]
+  var toDispose = sub.Subscribe(Console.WriteLine);
+  toDispose.Dispose();
+\end{lstlisting}
+
+\rx{} содержит множество полезные инструментов для работы с событиями. Все методы и расширения схожи по синтаксису с LINQ.
+
+Изначально LINQ позволял делать запросы к статическим источникам данных.
+Но так как количество данных растет, а подходы меняются, то нужно к этому приспосабливаться. Rx позволяет выполнять запросы к динамическим последовательностям.
+
+\begin{lstlisting}[style=csharpinlinestyle, caption={Пример использования LINQ}, label=lst:practice:reactive_extensions:linq_example]
+  using System.Reactive.Linq;
+
+  namespace Demo
+  {
+    class Program
+    {
+      static void Main()
+      {
+        var sequence = Observable.Range(1, 10, Scheduler.Default); // create sequence
+        var query = from s in sequence
+                where s % 2 == 0
+                select s; // create query
+        sequence.Subscribe(Console.WriteLine); // subscribe
+        query.Subscribe(Console.WriteLine); // subscribe
+      }
+    }
+  }
+\end{lstlisting}
+
+В листинге~\ref{lst:practice:reactive_extensions:linq_example} сначала создается последовательность, которая предоставляет данные типа \lstinline[style=csharpinlinestyle]!int! от 1 до 10,
+затем к ней применяется LINQ-выражение, которое выбирает из последовательности только значения, кратные 2.
+Таким образом, получается две разных последовательности, на которые можно подписать разных наблюдателей. Это крайне простой пример, но \rx{} предоставляет очень много методов, которые дают огромную гибкость.
+
+\rx{} позволяет создавать отдельные модули, которые будут следить за состоянием системы и реагировать на него. Каждая часть системы будет полностью независима, так как она не знает ничего об остальных модулях.
+Наблюдатели ожидают изменения последовательности, а ей, в свою очередь, все равно, кто наблюдает за ее изменениями. Тем самым достигается связанность модулей.
+\rx{} имеет смысл применять для обработки UI-событий, доменных событий, изменений окружающей среды, изменений на сторонних сервисах (RSS, Twitter и т.д.).
+Rx также предоставляет возможность преобразовывать события в \lstinline[style=csharpinlinestyle]!IObservable!, что позволяет интегрироваться в систему.
