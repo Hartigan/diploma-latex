@@ -15,6 +15,28 @@
   Timestamp                = {2013.03.21}
 }
 
+@Misc{algebraic_data_type,
+  Title                    = {Algebraic data type [Электронный ресурс]},
+
+  Author                   = {Free On-line Dictionary of Computing},
+  HowPublished             = {Электронные данные},
+  Month                    = {November},
+  Note                     = {Режим доступа: http://foldoc.org/algebraic%20data%20type},
+  Year                     = {1994},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.22}
+}
+
+@Book{intro2fp,
+  Title                    = {Введение в функциональное программирование},
+  Author                   = {John Harrison},
+  Year                     = {1997},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.16}
+}
+
 @Book{domain_kohonen,
   Title                    = {Self-Organizing Maps (Third Extended Edition)},
   Author                   = {T. Kohonen},
@@ -25,6 +47,16 @@
   Timestamp                = {2015.05.03}
 }
 
+@Book{little_law,
+  Title                    = {Probability, statistics, and random processes for electrical engineering (3rd ed.).},
+  Author                   = {Alberto Leon-Garcia},
+  Publisher                = {Prentice Hall},
+  Year                     = {2008},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.16}
+}
+
 @Article{improves_csharp6,
   Title                    = {The New and Improved C 6.0},
   Author                   = {Mark Michaelis},
@@ -33,6 +65,50 @@
 
   Owner                    = {Admin},
   Timestamp                = {2015.05.06}
+}
+
+@Misc{inotifycollectionchanged,
+  Title                    = {INotifyCollectionChanged [Электронный ресурс]},
+
+  Author                   = {MSDN},
+  HowPublished             = {Электронные данные},
+  Note                     = {Режим доступа: https://msdn.microsoft.com/ru-ru/library/system.collections.specialized.inotifycollectionchanged(v=vs.110).aspx},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.22}
+}
+
+@Misc{ireadonlycollection,
+  Title                    = {IReadOnlyCollection [Электронный ресурс]},
+
+  Author                   = {MSDN},
+  HowPublished             = {Электронные данные},
+  Note                     = {Режим доступа: https://msdn.microsoft.com/ru-ru/library/hh881542(v=vs.110).aspx},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.22}
+}
+
+@Misc{ireadonlylist,
+  Title                    = {IReadOnlyList [Электронный ресурс]},
+
+  Author                   = {MSDN},
+  HowPublished             = {Электронные данные},
+  Note                     = {Режим доступа: https://msdn.microsoft.com/ru-ru/library/hh192385(v=vs.110).aspx},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.22}
+}
+
+@Misc{weak_reference,
+  Title                    = {Weak References [Электронный ресурс]},
+
+  Author                   = {MSDN},
+  HowPublished             = {Электронные данные},
+  Note                     = {Режим доступа: https://msdn.microsoft.com/en-us/library/ms404247(v=vs.110).aspx},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.22}
 }
 
 @Book{quadratic_deviation,
@@ -59,6 +135,29 @@
   Owner                    = {Admin},
   Pages                    = {896},
   Timestamp                = {2013.03.20}
+}
+
+@Misc{location_transparency,
+  Title                    = {What Is Location Transparency? [Эл[Электронн ресурс},
+
+  Author                   = {Malcolm Tatum},
+  HowPublished             = {Электронные данные},
+  Month                    = {April},
+  Note                     = {Режим доступа: http://www.wisegeek.com/what-is-location-transparency.htm},
+  Year                     = {2016},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.16}
+}
+
+@Book{dijkstra,
+  Title                    = {A Discipline of Programming},
+  Author                   = {Dijkstra E. W.},
+  Publisher                = {Prentice-Hall},
+  Year                     = {1976},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.15}
 }
 
 @Book{sicp_2006_ru,
@@ -107,6 +206,16 @@
 
   Owner                    = {Admin},
   Timestamp                = {2015.05.03}
+}
+
+@Book{algh_complexity,
+  Title                    = {Математические методы анализа алгоритмов},
+  Author                   = {Д. Грин, Д. Кнут},
+  Publisher                = {Мир},
+  Year                     = {1987},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.16}
 }
 
 @Book{ot_electric_lighting,
@@ -204,6 +313,15 @@
   Timestamp                = {2015.05.10}
 }
 
+@Misc{circuit_breaker_design_pattern,
+  Title                    = {Circuit breaker design pattern [Электронный ресурс]},
+  HowPublished             = {Электронные данные},
+  Note                     = {Режим доступа: https://msdn.microsoft.com/en-us/library/dn589784.aspx},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.16}
+}
+
 @Misc{csharp_wiki_2013_ru,
   Title                    = {C Sharp [Электронный ресурс]},
   HowPublished             = {Электронные данные},
@@ -233,6 +351,31 @@
   Owner                    = {Admin},
   Timestamp                = {2015.05.02},
   Url                      = {http://radioskot.ru/publ/svetodiody/svetodiodna_lampa/3-1-0-141}
+}
+
+@Electronic{,
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.22}
+}
+
+@Misc{merriam_webster,
+  Title                    = {Merriam-Webster: Dictionary and Thesaurus [Электронный ресурс]},
+  HowPublished             = {Электронные данные},
+  Year                     = {2016},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.15}
+}
+
+@Misc{reactive_manifesto,
+  Title                    = {The Reactive Manifesto v2.0 [Электронный ресурс]},
+  HowPublished             = {Электронные данные},
+  Month                    = {September},
+  Note                     = {Режим доступа: http://www.reactivemanifesto.org/},
+  Year                     = {2014},
+
+  Owner                    = {Admin},
+  Timestamp                = {2016.05.16}
 }
 
 @Standard{ecma_335,
