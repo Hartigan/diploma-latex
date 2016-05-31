@@ -51,7 +51,7 @@
 
 % Зачем: Настраивает отступы от границ страницы.
 % Почему: Пункт 2.1.2 Требований по оформлению пояснительной записки.
-\usepackage[left=3cm,top=2.0cm,right=1.5cm,bottom=2.7cm]{geometry}
+\usepackage[left=3cm,top=2.0cm,right=1cm,bottom=2cm]{geometry}
 
 
 % Зачем: Настраивает межстрочный интервал, для размещения 40 +/- 3 строки текста на странице.
@@ -103,15 +103,16 @@
 % Зачем: Настраивает отступ между таблицей с содержанимем и словом СОДЕРЖАНИЕ
 % Почему: Пункт 2.2.7 Требований по оформлению пояснительной записки.
 \usepackage{tocloft}
-\setlength{\cftbeforetoctitleskip}{-1em}
+\setlength{\cftbeforetoctitleskip}{-3em}
 \setlength{\cftaftertoctitleskip}{1em}
 
 
 % Зачем: Определяет отступы слева для записей в таблице содержания.
 % Почему: Пункт 2.2.7 Требований по оформлению пояснительной записки.
 \makeatletter
-\renewcommand{\l@section}{\@dottedtocline{1}{0.5em}{1.2em}}
-\renewcommand{\l@subsection}{\@dottedtocline{2}{1.7em}{2.0em}}
+\renewcommand{\l@chapter}{\@dottedtocline{1}{0.5em}{1.5em}}
+\renewcommand{\l@section}{\@dottedtocline{1}{2.0em}{2.0em}}
+\renewcommand{\l@subsection}{\@dottedtocline{2}{4em}{2.5em}}
 \makeatother
 
 
@@ -131,15 +132,45 @@
     \rfoot{\thepage}}
 
 
+
+\makeatletter
+\renewcommand{\@makechapterhead}[1]{
+  \vspace*{-20pt}%
+  {\parindent \z@ 
+    \centering\hyphenpenalty=10000\normalfont\large\bfseries
+    \ifnum \c@secnumdepth >\m@ne
+        \normalfont\large\bfseries\MakeUppercase \@chapapp\space \thechapter
+        \par\nobreak
+        \vskip 0\p@
+    \fi
+    \interlinepenalty\@M
+    \normalfont\large\bfseries\MakeUppercase{#1}\par\nobreak
+    \vskip 1em \@plus .2ex
+  }}
+% \makeatletter
+% \renewcommand{\@makechapterhead}[1]{% Начало макроопределения
+%   \vspace*{-10pt}% Пустое место вверху страницы
+%   {\parindent=0pt
+%    \raggedright \normalfont\huge\bfseries
+%    \@chapapp{} % \@chapapp печатает слово "Глава" (см. ниже)
+%     \thechapter \par % номер главы - в отдельной строке
+%     \vspace{0 pt} % между словом "Глава" и ее заголовком
+%     \normalfont\Huge\bfseries #1\par % заголовок главы
+%     \nopagebreak     % чтоб не оторвать заголовок от текста
+%     \vspace{0 pt}   % между заголовком и текстом
+%   }% конец группы.
+% }% конец макроопределения
+
+
 % Зачем: Задает стиль заголовков раздела жирным шрифтом, прописными буквами, без точки в конце
 % Почему: Пункты 2.1.1, 2.2.5, 2.2.6 и ПРИЛОЖЕНИЕ Л Требований по оформлению пояснительной записки.
 \makeatletter
 \renewcommand\section{%
-  \clearpage\@startsection {section}{1}%
+    \@startsection {section}{1}%
     {\fivecharsapprox}%
     {-1em \@plus -1ex \@minus -.2ex}%
     {1em \@plus .2ex}%
-    {\raggedright\hyphenpenalty=10000\normalfont\large\bfseries\MakeUppercase}}
+    {\raggedright\hyphenpenalty=10000\normalfont\normalsize\bfseries}}
 \makeatother
 
 
@@ -150,7 +181,7 @@
   \@startsection{subsection}{2}%
     {\fivecharsapprox}%
     {-1em \@plus -1ex \@minus -.2ex}%
-    {1em \@plus .2ex}%
+    {\z@}%
     {\raggedright\hyphenpenalty=10000\normalfont\normalsize\bfseries}}
 \makeatother
 
@@ -162,7 +193,7 @@
   \@startsection{subsubsection}{3}%
     {\fivecharsapprox}%
     {-1em \@plus -1ex \@minus -.2ex}%
-    {1em \@plus .2ex}%
+    {\z@}%
     {\raggedright\hyphenpenalty=10000\normalfont\normalsize\bfseries}}
 \makeatother
 
@@ -275,15 +306,18 @@
 \setlist[enumerate,1]{itemindent=\parindent + 2.7ex,leftmargin=0ex}
 \setlist[enumerate,2]{itemindent=\parindent + \parindent - 2.7ex}
 
+
 % Зачем: Включение номера раздела в номер формулы. Нумерация формул внутри раздела.
-\AtBeginDocument{\numberwithin{equation}{section}}
+\AtBeginDocument{\numberwithin{equation}{chapter}}
+\renewcommand{\theequation}{\thechapter.\arabic{equation}}
 
 % Зачем: Включение номера раздела в номер таблицы. Нумерация таблиц внутри раздела.
-\AtBeginDocument{\numberwithin{table}{section}}
-
+\AtBeginDocument{\numberwithin{table}{chapter}}
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
+ 
 % Зачем: Включение номера раздела в номер рисунка. Нумерация рисунков внутри раздела.
-\AtBeginDocument{\numberwithin{figure}{section}}
-
+\AtBeginDocument{\numberwithin{figure}{chapter}}
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
 
 % Зачем: Дополнительные возможности в форматировании таблиц
 \usepackage{makecell}
@@ -383,7 +417,7 @@
 
 
 % Зачем: Нумерация листингов в пределах секции
-\AtBeginDocument{\numberwithin{lstlisting}{section}}
+\AtBeginDocument{\numberwithin{lstlisting}{chapter}}
 
 \usepackage[normalem]{ulem}
 
@@ -397,7 +431,7 @@
 % Магия для подсчета разнообразных объектов в документе
 \usepackage{lastpage}
 \usepackage{totcount}
-\regtotcounter{section}
+\regtotcounter{chapter}
 
 \usepackage{etoolbox}
 
@@ -425,9 +459,9 @@
 }
 \makeatother
 
-\pretocmd{\section}{\addtocounter{totfigures}{\value{figure}}\setcounter{figure}{0}}{}{}
-\pretocmd{\section}{\addtocounter{tottables}{\value{table}}\setcounter{table}{0}}{}{}
-\pretocmd{\section}{\addtocounter{totequation}{\value{equation}}\setcounter{equation}{0}}{}{}
+\pretocmd{\chapter}{\addtocounter{totfigures}{\value{figure}}\setcounter{figure}{0}}{}{}
+\pretocmd{\chapter}{\addtocounter{tottables}{\value{table}}\setcounter{table}{0}}{}{}
+\pretocmd{\chapter}{\addtocounter{totequation}{\value{equation}}\setcounter{equation}{0}}{}{}
 \pretocmd{\bibitem}{\addtocounter{totreferences}{1}}{}{}
 
 
@@ -473,3 +507,9 @@
        {\@latex@warning{Empty `thebibliography' environment}}%
       \endlist}
 \makeatother
+
+% Для окружения comment
+\usepackage{comment}
+
+\newcommand{\argmax}[1]{\operatorname{arg}\,\underset{#1}{\operatorname{max}}\;}
+
