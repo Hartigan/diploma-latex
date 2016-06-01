@@ -42,7 +42,7 @@
   \label{fig:event_generators}
 \end{figure}
 
-Рассмотрим их подробнее. Свойство \lstinline[style=csharpinlinestyle]!CollectionChanged! имеет тип \lstinline[style=csharpinlinestyle]!IObservable<IUpdateCollectionQuery>!.
+Рассмотрим их подробнее. Свойство генератора событий обновления коллекции \lstinline[style=csharpinlinestyle]!CollectionChanged! имеет тип \lstinline[style=csharpinlinestyle]!IObservable<IUpdateCollectionQuery>!.
 Если подписаться на это событие, то получатель будет иметь в своем распоряжении объекты типа \lstinline[style=csharpinlinestyle]!IUpdateCollectionQuery!,
 который является алегбраическим типом данных и представляет тип-сумму~\cite{algebraic_data_type}.
 \lstinline[style=csharpinlinestyle]!IUpdateCollectionQuery! --- является объектом запроса на обновление коллекции.
@@ -82,7 +82,7 @@
   \label{fig:queries}
 \end{figure}
 
-Интерфейсы, которые объединяют генераторы событий и хранилища данных называются \lstinline[style=csharpinlinestyle]!IObservableReadOnlyCollection<T>! и \lstinline[style=csharpinlinestyle]!IObservableReadOnlyList<T>!.
+Интерфейсы, которые объединяют генераторы событий и хранилища данных именуются \lstinline[style=csharpinlinestyle]!IObservableReadOnlyCollection! и \lstinline[style=csharpinlinestyle]!IObservableReadOnlyList!.
 Лист наследуется коллекции. В данной модели разработаны и реалицации этих коллекций и списков, которые можно изменять. Эти реализации и будут отправной точкой событий в данной системе.
 В модели они выражены в интерфейсах:
 
@@ -171,13 +171,13 @@
   \label{fig:collection_to_collection_operation_base}
 \end{figure}
 
-\lstinline[style=csharpinlinestyle]!CollectionToCollectionOperationBase<TIn, TOut>! --- наследует интерфейс \lstinline[style=csharpinlinestyle]!IObservableReadOnlyCollection<TOut>!
+\lstinline[style=csharpinlinestyle]!CollectionToCollectionOperationBase<TIn, TOut>! --- наследуется от  интерфейса \lstinline[style=csharpinlinestyle]!IObservableReadOnlyCollection<TOut>!
 и предназеначен для работы с генераторами событий \lstinline[style=csharpinlinestyle]!IObservable<IUpdateCollectionQuery<TIn>!(см. рисунок~\ref{fig:collection_to_collection_operation_base}).
 Позволяет реализовать операции трансформации(Select), фильтрации(Where) и т. д. Например: преобразование увеличения целых чисел в 2 раза или фильтрация записей студентов по группе.
 Результат будет обновлятся вместе исходной коллекцией. Класс решает задачи:
 
 \begin{itemize}
-  \item подписывается на источник событий при помощи Weak reference(слабой ссылки)\cite{weak_reference};
+  \item подписывается на источник событий с помощью Weak reference(слабой ссылки)\cite{weak_reference};
   \item создает пустые реализации для всех существующих типов запросов; если запрос не был обработан, возникнет ошибка на этапе компиляции;
   \item реализует интерфейс \lstinline[style=csharpinlinestyle]!IObservableReadOnlyCollection<TOut>!;
   \item генерирует события для \lstinline[style=csharpinlinestyle]!IObservableReadOnlyCollection<TOut>!.
@@ -190,7 +190,7 @@
   \label{fig:collection_to_list_operation_base}
 \end{figure}
 
-\lstinline[style=csharpinlinestyle]!CollectionToListOperationBase<TIn, TOut>! --- наследует интерфейс \lstinline[style=csharpinlinestyle]!IObservableReadOnlyList<TOut>!
+\lstinline[style=csharpinlinestyle]!CollectionToListOperationBase<TIn, TOut>! --- наследуется от базового интерфейса \lstinline[style=csharpinlinestyle]!IObservableReadOnlyList<TOut>!
 и предназеначен для работы с генераторами событий \lstinline[style=csharpinlinestyle]!IObservable<IUpdateCollectionQuery<TIn>!(см. рисунок~\ref{fig:collection_to_list_operation_base}).
 Позволяет реализовать операции по упорядочиванию элементов(Sort). Например: требуется сортировать заказы учитывая приоритет, который может измениться.
 Операция будет учитывать не только добавление и удаление элементов из коллекции, а еще и отслеживать изменения ключа сортировки.
@@ -210,7 +210,7 @@
   \label{fig:list_to_list_operation_base}
 \end{figure}
 
-\lstinline[style=csharpinlinestyle]!ListToListOperationBase<TIn, TOut>! --- наследует интерфейс \lstinline[style=csharpinlinestyle]!IObservableReadOnlyList<TOut>!
+\lstinline[style=csharpinlinestyle]!ListToListOperationBase<TIn, TOut>! --- наследуется от базового интерфейса \lstinline[style=csharpinlinestyle]!IObservableReadOnlyList<TOut>!
 и предназеначен для работы с генераторами событий \lstinline[style=csharpinlinestyle]!IObservable<IUpdateListQuery<TIn>!(см. рисунок~\ref{fig:list_to_list_operation_base}).
 Позволяет реализовать операции трансформации(Select), фильтрации(Where) и т. д. Может использоваться для переупорядочивания элементов(Sort, Take, Skip).
 Довольно распространённая задача реверсивного объода списка. Можно описать операцию Reverse, которая будет содержать объекты с обратной сортировкой и генерировать соответсвующие события.
@@ -232,7 +232,7 @@
 
 \lstinline[style=csharpinlinestyle]!CollectionFunctionBase<T>! --- предназеначен для работы с генераторами событий
 \lstinline[style=csharpinlinestyle]!IObservable<IUpdateCollectionQuery<TIn>!(см. рисунок~\ref{fig:collection_function_base}).
-Позволяет реализовать функции подсчета(Count), находжения минимума/максимума(Min/Max) и т. д.
+Позволяет реализовать функции подсчета(Count), поиска минимума/максимума(Min/Max) и т. д.
 Можно реализовать функцию, которая будет возвращать объект с изменяющимся числом в соответствии с количеством контактов в адресной книге.
 При добавлении контактов, число автоматически будет увеличиваться, при замене контакта число останется неизменным.
 Класс решает задачи:
