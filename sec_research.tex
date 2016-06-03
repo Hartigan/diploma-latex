@@ -42,7 +42,7 @@
   \label{fig:event_generators}
 \end{figure}
 
-Рассмотрим их подробнее. Свойство генератора событий обновления коллекции \lstinline[style=csharpinlinestyle]!CollectionChanged! имеет тип \lstinline[style=csharpinlinestyle]!IObservable<IUpdateCollectionQuery>!.
+Рассмотрим их подробнее. Свойство генератора событий обновления коллекции \lstinline[style=csharpinlinestyle]!CollectionChanged! имеет тип \lstinline[style=csharpinlinestyle]!IObservable!.
 Если подписаться на это событие, то получатель будет иметь в своем распоряжении объекты типа \lstinline[style=csharpinlinestyle]!IUpdateCollectionQuery!,
 который является алегбраическим типом данных и представляет тип-сумму~\cite{algebraic_data_type}.
 \lstinline[style=csharpinlinestyle]!IUpdateCollectionQuery! --- является объектом запроса на обновление коллекции.
@@ -82,14 +82,14 @@
   \label{fig:queries}
 \end{figure}
 
-Интерфейсы, которые объединяют генераторы событий и хранилища данных именуются \lstinline[style=csharpinlinestyle]!IObservableReadOnlyCollection! и \lstinline[style=csharpinlinestyle]!IObservableReadOnlyList!.
+Интерфейсы, которые объединяют генераторы событий и хранилища данных именуются \lstinline[style=csharpinlinestyle]!IObservableReadOnlyCollection! для коллекций, а также \lstinline[style=csharpinlinestyle]!IObservableReadOnlyList! для списков.
 Лист наследуется коллекции. В данной модели разработаны и реалицации этих коллекций и списков, которые можно изменять. Эти реализации и будут отправной точкой событий в данной системе.
 В модели они выражены в интерфейсах:
 
 \begin{itemize}
-  \item \lstinline[style=csharpinlinestyle]!IObservableCollection<T>! --- наследник \lstinline[style=csharpinlinestyle]!IObservableReadOnlyCollection<T>! и \lstinline[style=csharpinlinestyle]!ICollection<T>!.
+  \item \lstinline[style=csharpinlinestyle]!IObservableCollection<T>! --- наследует шаблонный интерфейс коллекции с разрешением только на чтение \lstinline[style=csharpinlinestyle]!IObservableReadOnlyCollection<T>! и редактируемой --- \lstinline[style=csharpinlinestyle]!ICollection<T>!.
   Расширен методами Replace и Reset. Первый позволяет одиним событием заменять элемент в коллекции, а второй позволяет сбрасывать содержимое коллекции за одно событие;
-  \item \lstinline[style=csharpinlinestyle]!IObservableList<T>! --- наследник \lstinline[style=csharpinlinestyle]!IObservableReadOnlyList<T>!, \lstinline[style=csharpinlinestyle]!IList<T>! и \lstinline[style=csharpinlinestyle]!IObservableCollection<T>!.
+  \item \lstinline[style=csharpinlinestyle]!IObservableList<T>! --- наследует шаблонный интерфейс списка с разрешением только на чтение \lstinline[style=csharpinlinestyle]!IObservableReadOnlyList<T>!, с возможностью редактирования --- \lstinline[style=csharpinlinestyle]!IList<T>! и \lstinline[style=csharpinlinestyle]!IObservableCollection<T>!.
   Расширен методами Replace, Reset и Move. Первые два, действуют аналогично методам из интерфейса коллекции, а метод Move позволяет изменять положение объекта за одно событие.
 \end{itemize}
 
@@ -251,7 +251,7 @@
 
 \lstinline[style=csharpinlinestyle]!ListFunctionBase<T>! --- предназеначен для работы с генераторами событий
 \lstinline[style=csharpinlinestyle]!IObservable<IUpdateListQuery<TIn>!(см. рисунок~\ref{fig:list_function_base}).
-Позволяет реализовать функции подсчета(Count), находжения минимума/максимума(Min/Max) и т. д. Например: посчитать количесво чётных числел на нечётных местах или какая-либо другая функция,
+Позволяет реализовать функции подсчета(Count), поиска минимума/максимума(Min/Max) и т. д. Например: посчитать количесво чётных числел на нечётных местах или какая-либо другая функция,
 зависящая от индексов. Можно реализовать функцию, которая будет учитывать индексы при вычислении.
 Класс решает задачи:
 
