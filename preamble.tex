@@ -56,11 +56,11 @@
 
 % Зачем: Настраивает межстрочный интервал, для размещения 40 +/- 3 строки текста на странице.
 % Почему: Пункт 2.1.1 Требований по оформлению пояснительной записки.
-\usepackage[nodisplayskipstretch]{setspace} 
+\usepackage[nodisplayskipstretch]{setspace}
 \setstretch{1.1}
 %\onehalfspacing
 
-% Зачем: Выбор шрифта по-умолчанию. 
+% Зачем: Выбор шрифта по-умолчанию.
 % Почему: Пункт 2.1.1 Требований по оформлению пояснительной записки.
 % Примечание: В требованиях не указан, какой именно шрифт использовать. По традиции используем TNR.
 \renewcommand{\rmdefault}{ftm} % Times New Roman
@@ -79,7 +79,7 @@
 
 % Зачем: Добавляет скобку 1) к номеру сноски
 % Почему: Пункты 2.9.2 и 2.9.1 Требований по оформлению пояснительной записки.
-\makeatletter 
+\makeatletter
 \def\@makefnmark{\hbox{\@textsuperscript{\normalfont\@thefnmark)}}}
 \makeatother
 
@@ -127,7 +127,7 @@
 \fancyfoot[R]{\thepage} % установка верхнего колонтитула
 \renewcommand{\footrulewidth}{0pt} % убрать разделительную линию внизу страницы
 \renewcommand{\headrulewidth}{0pt} % убрать разделительную линию вверху страницы
-\fancypagestyle{plain}{ 
+\fancypagestyle{plain}{
     \fancyhf{}
     \rfoot{\thepage}}
 
@@ -136,7 +136,7 @@
 \makeatletter
 \renewcommand{\@makechapterhead}[1]{
   \vspace*{-20pt}%
-  {\parindent \z@ 
+  {\parindent \z@
     \centering\hyphenpenalty=10000\normalfont\large\bfseries
     \ifnum \c@secnumdepth >\m@ne
         \normalfont\large\bfseries\MakeUppercase \@chapapp\space \thechapter
@@ -248,13 +248,13 @@
     {
     %%% Следующие строки определяют специфические требования кафедр. Раскоменнтируйте нужные 2 строки
     %% стандартный абзац, Кафедра информатики
-    \par 
+    \par
     \tabularx{\textwidth-\fivecharsapprox}{@{}ll@{ --- } X }
     %% без отступа, Кафедра экономической информатики
-    %\noindent 
+    %\noindent
     %\tabularx{\textwidth}{@{}ll@{ --- } X }
     }
-    { 
+    {
     \\[\parsep]
     \endtabularx
     }
@@ -264,7 +264,7 @@
 \usepackage{amsmath}
 
 
-% Зачем: Поддержка ажурного и готического шрифтов 
+% Зачем: Поддержка ажурного и готического шрифтов
 \usepackage{amsfonts}
 
 
@@ -314,7 +314,7 @@
 % Зачем: Включение номера раздела в номер таблицы. Нумерация таблиц внутри раздела.
 \AtBeginDocument{\numberwithin{table}{chapter}}
 \renewcommand{\thetable}{\thechapter.\arabic{table}}
- 
+
 % Зачем: Включение номера раздела в номер рисунка. Нумерация рисунков внутри раздела.
 \AtBeginDocument{\numberwithin{figure}{chapter}}
 \renewcommand{\thefigure}{\thechapter.\arabic{figure}}
@@ -407,7 +407,7 @@
   morekeywords={yield,var,get,set,from,select,partial,where,async,await},
   breaklines=true,
   columns=fullflexible,
-  basicstyle=\footnotesize\ttfamily
+  basicstyle=\small\ttfamily
 }
 
 \lstdefinestyle{csharpstyle}{
@@ -440,7 +440,7 @@
 \newcounter{totreferences}
 \newcounter{totequation}
 
-\providecommand\totfig{} 
+\providecommand\totfig{}
 \providecommand\tottab{}
 \providecommand\totref{}
 \providecommand\toteq{}
@@ -512,4 +512,3 @@
 \usepackage{comment}
 
 \newcommand{\argmax}[1]{\operatorname{arg}\,\underset{#1}{\operatorname{max}}\;}
-
