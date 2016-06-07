@@ -236,8 +236,8 @@
 \DeclareCaptionLabelFormat{stbtable}{Таблица \emph{#2}}
 \DeclareCaptionLabelSeparator{stb}{~---~}
 \captionsetup{labelsep=stb}
-\captionsetup[figure]{labelformat=stbfigure,justification=centering,aboveskip={26pt plus 3pt minus 2pt}}
-\captionsetup[table]{labelformat=stbtable,justification=raggedright}
+\captionsetup[figure]{font=small,labelformat=stbfigure,justification=centering,aboveskip={26pt plus 3pt minus 2pt}}
+\captionsetup[table]{font=small,labelformat=stbtable,justification=raggedright}
 \renewcommand{\thesubfigure}{\asbuk{subfigure}}
 
 % Зачем: Окружения для оформления формул
@@ -363,6 +363,8 @@
 \definecolor{redstrings}{rgb}{0.5,0,0}
 
 \renewcommand{\lstlistingname}{Листинг}
+
+\captionsetup[lstlisting]{font=small}
 
 \lstdefinelanguage{FSharp}
     {morekeywords={abstract,and,as,assert,base,begin,class,default,delegate,do,done,downcast,downto,elif,else,end,exception,extern,false,finally,for,fun,function,global,if,in,inherit,inline,interface,internal,lazy,let,let!,match,member,module,mutable,namespace,new,not,null,of,open,or,override,private,public,rec,return,return!,select,static,struct,then,to,true,try,type,upcast,use,use!,val,void,when,while,with,yield,yield!,asr,land,lor,lsl,lsr,lxor,mod,sig,atomic,break,checked,component,const,constraint,constructor,continue,eager,event,external,fixed,functor,include,method,mixin,object,parallel,process,protected,pure,sealed,tailcall,trait,virtual,volatile},
